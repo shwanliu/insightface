@@ -31,7 +31,7 @@ def ch_dev(arg_params, aux_params, ctx):
   return new_args, new_auxs
 
 def do_flip(data):
-  for idx in xrange(data.shape[0]):
+  for idx in range(data.shape[0]):
     data[idx,:,:] = np.fliplr(data[idx,:,:])
 
 class FaceModel:
@@ -58,7 +58,9 @@ class FaceModel:
     epoch = int(_vec[1])
     print('loading',prefix, epoch)
     self.model = edict()
-    self.model.ctx = mx.gpu(args.gpu)
+    # self.model.ctx = mx.gpu(args.gpu)
+    # gpu使用改为cpu使用
+    self.model.ctx = mx.cpu()
     self.model.sym, self.model.arg_params, self.model.aux_params = mx.model.load_checkpoint(prefix, epoch)
     self.model.arg_params, self.model.aux_params = ch_dev(self.model.arg_params, self.model.aux_params, self.model.ctx)
     all_layers = self.model.sym.get_internals()
@@ -122,7 +124,7 @@ class FaceModel:
       if flipid==1:
         do_flip(_img)
       #nimg = np.zeros(_img.shape, dtype=np.float32)
-      #nimg[:,ppatch[1]:ppatch[3],ppatch[0]:ppatch[2]] = _img[:, ppatch[1]:ppatch[3], ppatch[0]:ppatch[2]]
+      #nimg[:,ppatch[1]:ppatch[3],ppatch[0]:ppatch[2]] =  _img[:, ppatch[1]:ppatch[3], ppatch[0]:ppatch[2]]
       #_img = nimg
       input_blob = np.expand_dims(_img, axis=0)
       self.model.arg_params["data"] = mx.nd.array(input_blob, self.model.ctx)
