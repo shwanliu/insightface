@@ -286,7 +286,7 @@ def paresulte_arguments(argv):
     parser.add_argument('--file_server_image_dir', type=str,help='Base dir to the face image.', default='/home/shawnliu/workPlace/Face_server/images')
     parser.add_argument('--file_server', type=str,help='the file server address', default='http://192.168.1.157:8082')
     parser.add_argument('--port', default=5000, type=int, help='api port')
-    parser.add_argument('--gpu', default=0,1, type=int, help='gpu devices')
+    parser.add_argument('--gpu', default=0, type=int, help='gpu devices')
     return parser.parse_args(argv)
 
 
