@@ -100,3 +100,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+# annoy文件，使用annoy在特征空间中获的与给定512维特征空间最近的特征
+# 常用的算法有 kd-tree、kd-ball、faiss、annoy、线性搜索
+# annoy 为近似近邻搜索算法，参考使用#https://blog.csdn.net/luoyexuge/article/details/84235421
+*.ann

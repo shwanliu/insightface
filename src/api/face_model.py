@@ -59,8 +59,9 @@ class FaceModel:
     print('loading',prefix, epoch)
     self.model = edict()
     # self.model.ctx = mx.gpu(args.gpu)
+    self.model.ctx = mx.gpu(1)
     # gpu使用改为cpu使用
-    self.model.ctx = mx.cpu()
+    # self.model.ctx = mx.cpu()
     self.model.sym, self.model.arg_params, self.model.aux_params = mx.model.load_checkpoint(prefix, epoch)
     self.model.arg_params, self.model.aux_params = ch_dev(self.model.arg_params, self.model.aux_params, self.model.ctx)
     all_layers = self.model.sym.get_internals()
