@@ -1,26 +1,26 @@
-#1 构建DockerNginx 图片服务器镜像
+# 构建DockerNginx 图片服务器镜像
 
-    ## 首先本地创建一个要挂载到容器的图片根目录，
+## 首先本地创建一个要挂载到容器的图片根目录，
         mkdir /opt/images
 
-    ## 使用docker 拉取一个Nginx镜像
+## 使用docker 拉取一个Nginx镜像
         docker pull nginx
 
-    ## 创建一个nginx.conf
+## 创建一个nginx.conf
         1. 配置监听端口，注意不要冲突
         2. 设置图片根目录
 
-    ## 使用docker run 命令
+## 使用docker run 命令
         sudo docker run --name image-server -itd -p 8082:8080  \
         -v /Users/liuxiaoying/workplace/CV_Code/insightface/src/api/conf/nginx.conf:/etc/nginx/nginx.conf  \
         -v /opt/images/test:/opt/images/test nginx
 
-    ## 使用docker run 命令，在实验室进行部署
+## 使用docker run 命令，在实验室进行部署
         sudo docker run --name image-server -itd -p 8082:8080  \
         -v /home/shawnliu/workPlace/insightface/src/api/conf/nginx.conf:/etc/nginx/nginx.conf  \
         -v /home/shawnliu/workPlace/Face_server/images/test:/opt/images/test nginx
 
-#2 使用python:3.5 构建 人脸识别 insightface镜像
+# 使用python:3.5 构建 人脸识别 insightface镜像
 
     docker pull python:3.5
 
