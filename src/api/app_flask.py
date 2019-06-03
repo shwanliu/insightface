@@ -273,7 +273,62 @@ def identity():
         print(str(e))
         success = 1
     json_result["success"] = success
+
     return json.dumps(result,cls=JsonEncoder)
+
+#人脸验证请求
+# 上传两张人脸图片进行人脸比对
+@app.route("/faceVerify", methods=['POST'])
+def faceVerify():
+    success = 0
+    json_result = collections.OrderedDict()
+
+    file1 = request.files.get('image1')
+    file2 = request.files.get('image2')
+    if file1 is None or file2 is None:
+        status = "badrRequest"
+        json_result["success"] = success
+        json_result["status "] = status
+        return json.dumps(json_result) 
+    
+    # 写死保存目录，需修改
+    filename1 = str(datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))+str(random.randint(0,100))+'_1_'+'.jpg'
+    filepath1 = os.path.join(SERARCH_TMP_DIR,filename1)
+    file1.save(filepath1)
+
+    filename2 = str(datetime.datetime.now().strftime("%Y%m%d%H%M%S%f"))+str(random.randint(0,100))+'_2_.'+'jpg'
+    filepath2 = os.path.join(SERARCH_TMP_DIR,filename2)
+    file2.save(filepath2)
+
+    # 生成两张上传图片的特征编码
+    image1 = cv2.imread(filepath1, cv2.IMREAD_COLOR)
+    image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
+
+    image2 = cv2.imread(filepath2, cv2.IMREAD_COLOR)
+    image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
+
+    try:
+        face_img1 = model.get_aligned_face(image1)
+        face_img2 = model.get_aligned_face(image2)
+        if face_img1 is None or face_img2 is None :
+            status = "img1 or img2 noFace"
+        else:
+            feature1 = model.get_feature(face_img1)
+            feature2 = model.get_feature(face_img2)
+
+            # 计算两个人脸图的相似度
+            sim = dot(feature1,feature2)
+            print(sim[0]*100)
+
+    except Exception as e:
+        print(str(e))
+        success = 1
+
+    json_result["confidence"] = sim[0]*100
+    return json.dumps(json_result,cls=JsonEncoder)
+
+
+
 
 
 def add_i():

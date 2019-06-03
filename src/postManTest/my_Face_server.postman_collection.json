@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "c8ff00c5-3e17-423b-90a1-648d4479dc6b",
+		"name": "my_Face_server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "人脸入库",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "name",
+							"value": "liuxiaoying",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.157:5000/addFace",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"157"
+					],
+					"port": "5000",
+					"path": [
+						"addFace"
+					]
+				},
+				"description": "人脸入库"
+			},
+			"response": []
+		},
+		{
+			"name": "testApi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "人脸检索",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取人脸数据库长度",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.1.157:5000/getDbSize",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"157"
+					],
+					"port": "5000",
+					"path": [
+						"getDbSize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "人脸验证",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.1.157:5000/faceVerify",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"157"
+					],
+					"port": "5000",
+					"path": [
+						"faceVerify"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
