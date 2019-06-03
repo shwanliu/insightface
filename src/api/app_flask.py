@@ -77,6 +77,7 @@ def getDbSize():
     try:
         cursor.execute("select count(*) from FaceFeature ")
         _len = cursor.fetchall()
+        connect.close()
         json_result["success"] = success
         print('The number of face in DB is: ',_len)
         json_result["length"] = _len
@@ -175,9 +176,10 @@ def identity():
     status = "identited"
     json_result = collections.OrderedDict()
 
-    # 用于保存相似分数以及相似度
+    # 用于保存相似分数以及相似度,以及人员姓名
     sim_image = []
     sim = []
+    sim_name = []
 
     file = request.files.get('image')
     if file is None:
@@ -217,7 +219,7 @@ def identity():
                 dBFeature = np.frombuffer(feature,dtype=np.float32)
                 feature_list.append(dBFeature)
                 image_list.append(imgPath)
-                faceInfo.append({"faceId":faceId,"faceName":faceName,"imgPath ":imgPath})
+                faceInfo.append({"faceId":faceId,"faceName":faceName,"imgPath":imgPath})
 
                 # 特征编码索引
                 # _dBFeature=dBFeature.tolist()
@@ -253,6 +255,7 @@ def identity():
                     sim.__delitem__(id)
 
             _sim_image = np.array(image_list)[I].tolist()
+            _faceInfos = np.array(faceInfo)[I].tolist()
 
             for key in SERVER_DIR_KEYS:
                 print(key)
@@ -260,14 +263,17 @@ def identity():
                     for image in _sim_image:
                         if str(image) in files:
                             sim_image.append(args.file_server +'/'+key.split('images/')[1] + image)
-            json_result["sim_image"] = sim_image
-            json_result["sim"] = sim
+
+            result=[]
+            for idx, info in enumerate(_faceInfos):
+                result.append({'name':info['faceName'],'score':sim[idx],'imgPath':sim_image[idx]})
+                sim_name.append(info['faceName'])
 
     except Exception as e:
         print(str(e))
         success = 1
     json_result["success"] = success
-    return json.dumps(json_result,cls=JsonEncoder)
+    return json.dumps(result,cls=JsonEncoder)
 
 
 def add_i():
