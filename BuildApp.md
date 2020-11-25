@@ -13,7 +13,7 @@
 ## 使用docker run 命令
         sudo docker run --name image-server -itd -p 8082:8080  \
         -v /Users/liuxiaoying/workplace/CV_Code/insightface/src/api/conf/nginx.conf:/etc/nginx/nginx.conf  \
-        -v /opt/images/test:/opt/images/test nginx
+        -v /Users/liuxiaoying/workplace/CV_Code/insightface/src/api/images/test:/opt/images/test nginx
 
 ## 使用docker run 命令，在实验室进行部署
         sudo docker run --name image-server -itd -p 8082:8080  \

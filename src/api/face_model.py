@@ -59,7 +59,7 @@ class FaceModel:
     print('loading',prefix, epoch)
     self.model = edict()
     # self.model.ctx = mx.gpu(args.gpu)
-    self.model.ctx = mx.gpu(1)
+    self.model.ctx = mx.cpu()
     # gpu使用改为cpu使用
     # self.model.ctx = mx.cpu()
     self.model.sym, self.model.arg_params, self.model.aux_params = mx.model.load_checkpoint(prefix, epoch)
@@ -110,7 +110,7 @@ class FaceModel:
     str_image_size = "%d,%d"%(self.image_size[0], self.image_size[1])
     bounding_boxes, points = detect_face.detect_face(img, self.det_minsize, self.pnet, self.rnet, self.onet, self.det_threshold, self.det_factor)
     ret = []
-    for i in xrange(bounding_boxes.shape[0]):
+    for i in range(bounding_boxes.shape[0]):
       bbox = bounding_boxes[i,0:4]
       landmark = points[:, i].reshape((2,5)).T
       aligned = face_preprocess.preprocess(img, bbox=bbox, landmark = landmark, image_size=str_image_size)
